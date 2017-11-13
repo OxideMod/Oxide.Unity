@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using Oxide.Core;
 using UnityEngine;
 
-namespace Oxide.Unity
+namespace Oxide.Core.Unity
 {
     /// <summary>
     /// The main MonoBehaviour which calls OxideMod.OnFrame
@@ -14,14 +13,14 @@ namespace Oxide.Unity
 
         public static void Create()
         {
-            Instance = new GameObject("Oxide.Unity");
+            Instance = new GameObject("Oxide.Core.Unity");
             DontDestroyOnLoad(Instance);
             Instance.AddComponent<UnityScript>();
         }
 
         private OxideMod oxideMod;
 
-        void Awake()
+        private void Awake()
         {
             oxideMod = Interface.Oxide;
 
@@ -33,7 +32,7 @@ namespace Oxide.Unity
                 var logCallback = logCallbackField?.GetValue(null) as Application.LogCallback;
                 if (logCallback == null) Interface.Oxide.LogWarning("No Unity application log callback is registered");
 
-                #pragma warning disable 0618
+#pragma warning disable 0618
                 Application.RegisterLogCallback((message, stack_trace, type) =>
                 {
                     logCallback?.Invoke(message, stack_trace, type);
@@ -48,16 +47,16 @@ namespace Oxide.Unity
             }
         }
 
-        void Update() => oxideMod.OnFrame(Time.deltaTime);
+        private void Update() => oxideMod.OnFrame(Time.deltaTime);
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (oxideMod.IsShuttingDown) return;
             oxideMod.LogWarning("The Oxide Unity Script was destroyed (creating a new instance)");
             oxideMod.NextTick(Create);
         }
 
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             if (!oxideMod.IsShuttingDown)
             {
@@ -66,7 +65,7 @@ namespace Oxide.Unity
             }
         }
 
-        void LogMessageReceived(string message, string stackTrace, LogType type)
+        private void LogMessageReceived(string message, string stackTrace, LogType type)
         {
             if (type == LogType.Exception) RemoteLogger.Exception(message, stackTrace);
         }

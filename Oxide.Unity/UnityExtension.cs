@@ -1,18 +1,25 @@
-﻿using System;
+﻿using Oxide.Core.Extensions;
+using Oxide.Core.Unity.Plugins;
+using System;
 using System.Reflection;
-using Oxide.Core;
-using Oxide.Core.Extensions;
-using Oxide.Unity.Plugins;
 using UnityEngine;
 
-namespace Oxide.Unity
+namespace Oxide.Core.Unity
 {
     /// <summary>
     /// The extension class that represents this extension
     /// </summary>
     public class UnityExtension : Extension
     {
-        internal static readonly Version AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+        internal static Assembly Assembly = Assembly.GetExecutingAssembly();
+        internal static AssemblyName AssemblyName = Assembly.GetName();
+        internal static VersionNumber AssemblyVersion = new VersionNumber(AssemblyName.Version.Major, AssemblyName.Version.Minor, AssemblyName.Version.Build);
+        internal static string AssemblyAuthors = ((AssemblyCompanyAttribute)Attribute.GetCustomAttribute(Assembly, typeof(AssemblyCompanyAttribute), false)).Company;
+
+        /// <summary>
+        /// Gets whether this extension is a core extension
+        /// </summary>
+        public override bool IsCoreExtension => true;
 
         /// <summary>
         /// Gets the name of this extension
@@ -20,14 +27,14 @@ namespace Oxide.Unity
         public override string Name => "Unity";
 
         /// <summary>
-        /// Gets the version of this extension
-        /// </summary>
-        public override VersionNumber Version => new VersionNumber(AssemblyVersion.Major, AssemblyVersion.Minor, AssemblyVersion.Build);
-
-        /// <summary>
         /// Gets the author of this extension
         /// </summary>
-        public override string Author => "Oxide Team";
+        public override string Author => AssemblyAuthors;
+
+        /// <summary>
+        /// Gets the version of this extension
+        /// </summary>
+        public override VersionNumber Version => AssemblyVersion;
 
         /// <summary>
         /// Initializes a new instance of the UnityExtension class

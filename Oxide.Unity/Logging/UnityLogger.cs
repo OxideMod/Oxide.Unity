@@ -1,11 +1,10 @@
 ﻿using System.Threading;
-using Oxide.Core;
-using Oxide.Core.Logging;
 using UnityEngine;
 
+using Logger = Oxide.Core.Logging.Logger;
 using LogType = Oxide.Core.Logging.LogType;
 
-namespace Oxide.Unity.Logging
+namespace Oxide.Core.Unity.Logging
 {
     /// <summary>
     /// A logger that writes to the Unity console
@@ -39,12 +38,15 @@ namespace Oxide.Unity.Logging
                 case LogType.Debug:
                     Debug.Log(message.ConsoleMessage);
                     break;
+
                 case LogType.Warning:
                     Debug.LogWarning(message.ConsoleMessage);
                     break;
+
                 case LogType.Error:
                     Debug.LogError(message.ConsoleMessage);
                     break;
+
                 case LogType.Stacktrace:
                     if (Interface.Oxide.Config.Console.ShowStacktraces)
                         Debug.Log(message.ConsoleMessage);

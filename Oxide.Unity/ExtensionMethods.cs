@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Oxide.Unity
+namespace Oxide.Core.Unity
 {
     /// <summary>
     /// Useful extension methods which are added to base types

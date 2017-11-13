@@ -1,8 +1,7 @@
-﻿using Oxide.Core;
-using Oxide.Core.Plugins;
-using Oxide.Unity.Logging;
+﻿using Oxide.Core.Plugins;
+using Oxide.Core.Unity.Logging;
 
-namespace Oxide.Unity.Plugins
+namespace Oxide.Core.Unity.Plugins
 {
     /// <summary>
     /// The core Unity plugin
@@ -18,9 +17,8 @@ namespace Oxide.Unity.Plugins
         {
             // Set plugin info attributes
             Title = "Unity";
-            Author = "Oxide Team";
-            var assemblyVersion = UnityExtension.AssemblyVersion;
-            Version = new VersionNumber(assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
+            Author = UnityExtension.AssemblyAuthors;
+            Version = UnityExtension.AssemblyVersion;
         }
 
         /// <summary>
@@ -58,6 +56,6 @@ namespace Oxide.Unity.Plugins
         /// <param name="message"></param>
         public void PrintError(string message) => UnityEngine.Debug.LogError(message);
 
-        #endregion
+        #endregion Console/Logging
     }
 }
