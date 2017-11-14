@@ -1,8 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 15.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oxide.Unity", "Oxide.Unity\Oxide.Unity.csproj", "{52C26C5B-23E5-48A2-B403-5FF5C898E91A}"
+Project("{AC016865-AE43-4FEF-BD68-8B9AEFDA0B1A}") = "Oxide.Unity", "Oxide.Unity\Oxide.Unity.csproj", "{52C26C5B-23E5-48A2-B403-5FF5C898E91A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
