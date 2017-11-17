@@ -44,10 +44,12 @@ namespace Oxide.Core.Unity.Logging
                     break;
 
                 case LogType.Error:
+                    Interface.CallHook("OnServerError", LogType.Error, message.ConsoleMessage);
                     Debug.LogError(message.ConsoleMessage);
                     break;
 
                 case LogType.Stacktrace:
+                    Interface.CallHook("OnServerError", LogType.Stacktrace, message.ConsoleMessage);
                     if (Interface.Oxide.Config.Console.ShowStacktraces)
                         Debug.Log(message.ConsoleMessage);
                     break;
