@@ -19,5 +19,27 @@ namespace Oxide.Core.Unity
             var split = vector3.Split(',').Select(Convert.ToSingle).ToArray();
             return split.Length == 3 ? new Vector3(split[0], split[1], split[2]) : Vector3.zero;
         }
+
+        /// <summary>
+        /// Converts a UnityEngine LogType to the universal LogType format
+        /// </summary>
+        /// <param name="logType"></param>
+        /// <returns></returns>
+        public static Core.Logging.LogType ToLogType(this LogType logType)
+        {
+            switch (logType)
+            {
+                case LogType.Assert:
+                case LogType.Error:
+                case LogType.Exception:
+                    return Core.Logging.LogType.Error;
+
+                case LogType.Warning:
+                    return Core.Logging.LogType.Warning;
+
+                default:
+                    return Core.Logging.LogType.Info;
+            }
+        }
     }
 }
