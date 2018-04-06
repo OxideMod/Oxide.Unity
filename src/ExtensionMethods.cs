@@ -16,7 +16,7 @@ namespace Oxide.Core.Unity
         /// <returns></returns>
         public static Vector3 ToVector3(this string vector3)
         {
-            var split = vector3.Split(',').Select(Convert.ToSingle).ToArray();
+            float[] split = vector3.Split(',').Select(Convert.ToSingle).ToArray();
             return split.Length == 3 ? new Vector3(split[0], split[1], split[2]) : Vector3.zero;
         }
 

@@ -24,13 +24,16 @@ namespace Oxide.Core.Unity
         {
             oxideMod = Interface.Oxide;
 
-            var eventInfo = typeof(Application).GetEvent("logMessageReceived");
+            EventInfo eventInfo = typeof(Application).GetEvent("logMessageReceived");
             if (eventInfo == null)
             {
                 // Unity 4
-                var logCallbackField = typeof(Application).GetField("s_LogCallback", BindingFlags.Static | BindingFlags.NonPublic);
-                var logCallback = logCallbackField?.GetValue(null) as Application.LogCallback;
-                if (logCallback == null) Interface.Oxide.LogWarning("No Unity application log callback is registered");
+                FieldInfo logCallbackField = typeof(Application).GetField("s_LogCallback", BindingFlags.Static | BindingFlags.NonPublic);
+                Application.LogCallback logCallback = logCallbackField?.GetValue(null) as Application.LogCallback;
+                if (logCallback == null)
+                {
+                    Interface.Oxide.LogWarning("No Unity application log callback is registered");
+                }
 
 #pragma warning disable 0618
                 Application.RegisterLogCallback((message, stack_trace, type) =>
@@ -42,7 +45,7 @@ namespace Oxide.Core.Unity
             else
             {
                 // Unity 5
-                var handleException = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, "LogMessageReceived");
+                Delegate handleException = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, "LogMessageReceived");
                 eventInfo.GetAddMethod().Invoke(null, new object[] { handleException });
             }
         }
@@ -51,7 +54,11 @@ namespace Oxide.Core.Unity
 
         private void OnDestroy()
         {
-            if (oxideMod.IsShuttingDown) return;
+            if (oxideMod.IsShuttingDown)
+            {
+                return;
+            }
+
             oxideMod.LogWarning("The Oxide Unity Script was destroyed (creating a new instance)");
             oxideMod.NextTick(Create);
         }
@@ -65,9 +72,12 @@ namespace Oxide.Core.Unity
             }
         }
 
-        private void LogMessageReceived(string message, string stackTrace, LogType type)
+        private static void LogMessageReceived(string message, string stackTrace, LogType type)
         {
-            if (type == LogType.Exception) RemoteLogger.Exception(message, stackTrace);
+            if (type == LogType.Exception)
+            {
+                RemoteLogger.Exception(message, stackTrace);
+            }
         }
     }
 }
