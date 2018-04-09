@@ -72,7 +72,7 @@ namespace Oxide.Core.Unity
             }
         }
 
-        private static void LogMessageReceived(string message, string stackTrace, LogType type)
+        private void LogMessageReceived(string message, string stackTrace, LogType type)
         {
             if (type == LogType.Exception)
             {
