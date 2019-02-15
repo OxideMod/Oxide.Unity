@@ -10,6 +10,8 @@ namespace Oxide.Core.Unity
     public class UnityScript : MonoBehaviour
     {
         public static GameObject Instance { get; private set; }
+        
+        public static float RealtimeSinceStartup { get; private set; }
 
         public static void Create()
         {
@@ -22,6 +24,8 @@ namespace Oxide.Core.Unity
 
         private void Awake()
         {
+            RealtimeSinceStartup = Time.realtimeSinceStartup;
+
             oxideMod = Interface.Oxide;
 
             EventInfo eventInfo = typeof(Application).GetEvent("logMessageReceived");
@@ -50,7 +54,12 @@ namespace Oxide.Core.Unity
             }
         }
 
-        private void Update() => oxideMod.OnFrame(Time.deltaTime);
+        private void Update()
+        {
+            RealtimeSinceStartup = Time.realtimeSinceStartup;
+
+            oxideMod.OnFrame(Time.deltaTime);
+        }
 
         private void OnDestroy()
         {

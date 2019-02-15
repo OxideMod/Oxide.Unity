@@ -2,7 +2,6 @@
 using Oxide.Core.Unity.Plugins;
 using System;
 using System.Reflection;
-using UnityEngine;
 
 namespace Oxide.Core.Unity
 {
@@ -51,7 +50,7 @@ namespace Oxide.Core.Unity
         {
             Manager.RegisterPluginLoader(new UnityPluginLoader());
 
-            Interface.Oxide.RegisterEngineClock(() => Time.realtimeSinceStartup);
+            Interface.Oxide.RegisterEngineClock(() => UnityScript.RealtimeSinceStartup);
 
             // Register our MonoBehaviour
             UnityScript.Create();
