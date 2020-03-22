@@ -48,6 +48,8 @@ namespace Oxide.Core.Unity
         /// </summary>
         public override void Load()
         {
+            Interface.Oxide.LogInfo($"Unity version: {UnityEngine.Application.unityVersion}");
+
             Manager.RegisterPluginLoader(new UnityPluginLoader());
 
             Interface.Oxide.RegisterEngineClock(() => UnityScript.RealtimeSinceStartup);
